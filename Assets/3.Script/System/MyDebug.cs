@@ -3,7 +3,7 @@ using UnityEngine;
 public static class MyDebug
 {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-    private static readonly string[] rainbowColors = 
+    private static readonly string[] RAINBOW_COLORS = 
     {
         "red",      // 빨강
         "orange",   // 주황
@@ -17,9 +17,9 @@ public static class MyDebug
     public static void Log(object message, int index = 0)
     {
         // index를 0~rainbowColors.Length-1 범위로 제한
-        int colorIndex = Mathf.Abs(index) % rainbowColors.Length;
+        int colorIndex = Mathf.Abs(index) % RAINBOW_COLORS.Length;
 
-        string color = rainbowColors[colorIndex];
+        string color = RAINBOW_COLORS[colorIndex];
 
         Debug.Log($"<color={color}>{message}</color>");
     }

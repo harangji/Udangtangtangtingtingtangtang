@@ -9,6 +9,4 @@ public class ClampedFloat : ClampedValue<float>
     protected override float Clamp(float value, float min, float max) => Mathf.Clamp(value, min, max);
     protected override float Add(float a, float b) => a + b;
     protected override float Subtract(float a, float b) => a - b;
-
-    
 }

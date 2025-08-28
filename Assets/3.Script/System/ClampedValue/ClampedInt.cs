@@ -10,6 +10,4 @@ public class ClampedInt : ClampedValue<int>
     protected override int Add(int a, int b) => a + b;
     protected override int Subtract(int a, int b) => a - b;
     protected override int Clamp(int value, int min, int max) => Mathf.Clamp(value, min, max);
-
-    
 }

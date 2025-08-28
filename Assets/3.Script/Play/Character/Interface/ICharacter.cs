@@ -1,6 +1,16 @@
 
-public interface ICharacter
+public enum ECharacterType
 {
+    Attacker,
+    Defender,
+    Healer,    
+}
+
+public interface ICharacter : ICollidable
+{
+    public ECharacterType Type { get; }
+    public CharacterBase Character { get; }
+    
     public class Stat
     {
         public int Hp;
@@ -17,5 +27,5 @@ public interface ICharacter
     
     public Stat UnitStat { get; set; }
 
-    public Stat InitializeStat();
+    public void InitializeStat(Stat stat);
 }

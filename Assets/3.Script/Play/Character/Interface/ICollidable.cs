@@ -1,6 +1,13 @@
+using System;
+
+public enum EColliderCamp
+{
+    AllyCamp,
+    EnemyCamp,
+}
 
 public interface ICollidable
 {
-    public void Shove();
-    public void Shoved();
+    public EColliderCamp ColliderCamp { get; }
+    public void OnCollide(ICharacter target);
 }

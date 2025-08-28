@@ -8,6 +8,7 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
     private static bool isInitialized = false;
 
     public static bool IsInitialized => isInitialized && instance != null;
+    protected abstract bool dontDestroyOnLoad { get; set; }
     
     public static T Instance
     {
@@ -27,9 +28,8 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
 
                     if (instance == null)
                     {
-                        var singletonObject = new GameObject(typeof(T).Name);
+                        GameObject singletonObject = new GameObject(typeof(T).Name);
                         instance = singletonObject.AddComponent<T>();
-                        // DontDestroyOnLoad(singletonObject);
                     }
 
                     (instance as SingletonBase<T>)?.OnInitialize();
@@ -46,7 +46,11 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
         if (instance == null)
         {
             instance = this as T;
-            // DontDestroyOnLoad(gameObject);
+            
+            if (dontDestroyOnLoad)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
 
             OnInitialize();
             isInitialized = true;
