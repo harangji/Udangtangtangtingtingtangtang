@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public interface ISkillTypeAttack<T> : ISkill
+public interface ISkillTypeAttack<T>
 {
     public float AttackAmount { get; }
-    public void ExecuteAttack(T target);
+    public void ApplyAttack(T target);
 }

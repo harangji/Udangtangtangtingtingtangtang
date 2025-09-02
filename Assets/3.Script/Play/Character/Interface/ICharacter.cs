@@ -1,31 +1,20 @@
 
-public enum ECharacterType
-{
-    Attacker,
-    Defender,
-    Healer,    
-}
-
-public interface ICharacter : ICollidable
+public interface ICharacter
 {
     public ECharacterType Type { get; }
-    public CharacterBase Character { get; }
-    
-    public class Stat
-    {
-        public int Hp;
-        public int HpRegenAmount;
-        public int HpRegenTerm;
-
-        public int Mp;
-        public int MpRegen;
-        public int MpRegenTerm;
-
-        public int Attack;
-        public float Speed;
-    };
-    
-    public Stat UnitStat { get; set; }
-
-    public void InitializeStat(Stat stat);
+    public CharacterStat UnitStat { get; }
 }
+
+public interface IInGameCharacter : ICharacter, ISkillCastable, ICollidable, IDamageable
+{
+    public CharacterBase Instance { get; }
+}
+
+
+public interface ICharacterSample
+{
+    public ECharacterType Type { get; }
+    public EColliderCamp ColliderCamp { get; }
+    public CharacterStat CharacterStat { get; }
+}
+

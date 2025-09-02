@@ -1,10 +1,11 @@
 
 using System.Threading.Tasks;
 
-public interface ISkill : ICollidable
+public interface ISkill
 {
-    public ICharacter Sender { get; }
+    public abstract EColliderCamp TargetColliderCamp { get; }
+    public IInGameCharacter SkillCaster { get; }
     public TaskCompletionSource<bool> Tcs { get; }
-    public void ExecuteSkill(ICharacter sender, ICombatEvent[] target);
-    public void ApplySkill(ICharacter[] target);
+    public Task ActivateSkill(IInGameCharacter sender, CombatEvent[] target);
+    public void ApplySkill(IInGameCharacter[] target);
 }

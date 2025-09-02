@@ -4,36 +4,38 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class SampleSkill1 : SkillBase, ISkillTypeAttack<CharacterBase[]>, ISkillTypeDebuff<CharacterBase>
+public class SampleSkill1 : TriggerSkill, ISkillTypeAttack<IInGameCharacter[]>
 {
-    public override EColliderCamp ColliderCamp { get; set; }
-    public override ICharacter Sender { get; set; }
+    public override EColliderCamp TargetColliderCamp { get; set; } = EColliderCamp.AllyCamp;
+    public override IInGameCharacter SkillCaster { get; set; }
     public override TaskCompletionSource<bool> Tcs { get; set; }
-    public override void ExecuteSkill(ICharacter sender, ICombatEvent[] target)
+    
+    public float AttackAmount { get; set; }
+    public float BuffAmount { get; set; }
+    
+    private float mSkillDamage = 0f;
+    
+    public override async Task ActivateSkill(IInGameCharacter sender, CombatEvent[] target)
     {
-        Sender = sender;
+        SkillCaster = sender;
+        mSkillDamage = SkillCaster.UnitStat.Attack * AttackAmount;
+        // await Tcs.Task;
+        return;
     }
-
-    public override void ApplySkill(ICharacter[] target)
+    
+    public override void OnCollide(CombatEvent combatEvent)
     {
-        throw new NotImplementedException();
+        
     }
-
-    public override void OnCollide(ICharacter target)
+    
+    public override void ApplySkill(IInGameCharacter[] target)
     {
-        throw new NotImplementedException();
+
     }
-
-    public float AttackAmount { get; }
-    public void ExecuteAttack(CharacterBase[] target)
+    
+    public void ApplyAttack(IInGameCharacter[] target)
     {
-        throw new NotImplementedException();
-    }
 
-    public float BuffAmount { get; }
-    public Task ExecuteDeBuff(CharacterBase target)
-    {
-        throw new NotImplementedException();
     }
 }
 
