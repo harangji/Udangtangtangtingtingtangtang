@@ -44,16 +44,23 @@ public class PlayerManager : MonoBehaviour
         if(EventSystem.current.IsPointerOverGameObject()) return;
         if(Input.GetMouseButtonDown(0))
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            //RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             
-            if(hit.collider != null)
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(
+                new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(Camera.main.transform.position.z))
+            );
+            Vector2 mousePos2D = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
+
+            Collider2D hit = Physics2D.OverlapPoint(mousePos2D);
+            
+            if(hit != null)
             {
-                bool isHitPlayer = hit.collider.CompareTag("Player");
+                bool isHitPlayer = hit.CompareTag("Player");
                 CommandPanel.gameObject.SetActive(isHitPlayer);
                
                 if(isHitPlayer)
                 {
-                    _nowObj = hit.collider.GetComponent<PlayerObj>();
+                    _nowObj = hit.GetComponent<PlayerObj>();
                     CreateAnimationPanel(_nowObj);
                 }
                 else
@@ -61,8 +68,8 @@ public class PlayerManager : MonoBehaviour
                     //Set move Player object to this point
                     if(_nowObj!=null)
                     {
-                        Vector2 goalPos = hit.point;
-                        _goalObjCircle.transform.position = hit.point;
+                        Vector2 goalPos = hit.transform.position;
+                        _goalObjCircle.transform.position = hit.transform.position;
                         _nowObj.SetMovePos(goalPos);
                     }
                 }

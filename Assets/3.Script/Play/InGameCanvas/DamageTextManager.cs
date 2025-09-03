@@ -8,14 +8,12 @@ public class DamageTextManager : MonoBehaviour
 
     public DamageText textPrefab;
     public DamageText[] texts;
-
-    private Camera mMainCamera;
+    
     private Queue<DamageText> mQueue = new Queue<DamageText>();
     private Vector2 screenPos;
     
     private void Awake()
     {
-        mMainCamera = Camera.main;
         foreach (var text in texts)
         {
             text.gameObject.SetActive(false);
@@ -26,17 +24,17 @@ public class DamageTextManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (var ally in CharacterHolder.Instance.Allys)
+        foreach (var ally in InGameHolder.Instance.Allys)
         {
-            ally.CharacterCallBack.HitAction += OnHitEvent;
+            ally.CharacterCallBack.ShowDamageAction += OnHitEvent;
         }
-        foreach (var enemy in CharacterHolder.Instance.Enemies)
+        foreach (var enemy in InGameHolder.Instance.Enemies)
         {
-            enemy.CharacterCallBack.HitAction += OnHitEvent;
+            enemy.CharacterCallBack.ShowDamageAction += OnHitEvent;
         }
     }
     
-    private void OnHitEvent(int damage, Vector2 hitPosition)
+    private void OnHitEvent(int damage, Vector2 hitPosition, Color color)
     {
         DamageText text;
         
@@ -50,9 +48,9 @@ public class DamageTextManager : MonoBehaviour
             text.Queue = mQueue;
         }
         
-        screenPos = RectTransformUtility.WorldToScreenPoint(mMainCamera, hitPosition);
+        screenPos = RectTransformUtility.WorldToScreenPoint(InGameHolder.Instance.mainCamera, hitPosition);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, screenPos, canvas.worldCamera, out Vector2 localPosition);
         
-        text.ShowText(damage.ToString(), localPosition, Color.red);
+        text.ShowText(damage.ToString(), localPosition, color);
     }
 }
