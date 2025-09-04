@@ -62,8 +62,8 @@ namespace SuperTiled2Unity.Editor
             // Excute our clippers and add game objects with their solution polygons
             foreach (var pair in m_CollisionClippers)
             {
-                var key = pair.Key;
-                var clipper = pair.Value;
+                CollisionClipperKey key = pair.Key;
+                CollisionClipper clipper = pair.Value;
 
                 clipper.Execute();
 
