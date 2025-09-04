@@ -29,18 +29,19 @@ public class CombatSystem : SingletonBase<CombatSystem>
         CharacterBase sender = combatEvent.Sender;
         CharacterBase receiver = combatEvent.Receiver;
         
-        if(sender.Camp == receiver.Camp)
+        if(sender.Interface.Collidable.Camp == receiver.Interface.Collidable.Camp)
         {
-            if (receiver.TryGetComponent(out IHealable healable))
+            if (sender.Interface.Character.Type == ECharacterType.Healer)
             {
-                healable.TakeHeal(sender.UnitStat.Attack);
+                receiver.Interface.Healable?.TakeHeal(sender.Interface.Character.UnitStat.Attack);
             }
         }
         else
         {
-            if (receiver.TryGetComponent(out IDamageable damageable))
+            if (sender.Interface.Character.Type == ECharacterType.Attacker)
             {
-                damageable.TakeDamage(DamageCalculated(sender, receiver));
+                sender.Interface.Collidable?.OnCollide(combatEvent);
+                receiver.Interface.Damageable?.TakeDamage(DamageCalculated(sender, receiver));
             }
         }
     }
@@ -48,8 +49,9 @@ public class CombatSystem : SingletonBase<CombatSystem>
     private int DamageCalculated(CharacterBase sender, CharacterBase receiver)
     {
         int result = 0;
-        CharacterStat senderStat = sender.UnitStat;
-        CharacterStat targetStat = receiver.UnitStat;
+        CharacterStat senderStat = sender.Interface.Character.UnitStat;
+        CharacterStat targetStat = receiver.Interface.Character.UnitStat;
+        
         //계산
         result = senderStat.Attack; // * 어떤 기준
         

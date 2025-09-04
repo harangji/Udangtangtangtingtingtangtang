@@ -1,6 +1,8 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class DamageTextManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class DamageTextManager : MonoBehaviour
     
     private void Awake()
     {
+        InGameEventHandler.Instance.ShowDamageTextHandler += OnHitEvent;
         foreach (var text in texts)
         {
             text.gameObject.SetActive(false);
@@ -21,20 +24,8 @@ public class DamageTextManager : MonoBehaviour
             mQueue.Enqueue(text);
         }
     }
-
-    private void Start()
-    {
-        foreach (var ally in InGameHolder.Instance.Allys)
-        {
-            ally.CharacterCallBack.ShowDamageAction += OnHitEvent;
-        }
-        foreach (var enemy in InGameHolder.Instance.Enemies)
-        {
-            enemy.CharacterCallBack.ShowDamageAction += OnHitEvent;
-        }
-    }
     
-    private void OnHitEvent(int damage, Vector2 hitPosition, Color color)
+    private void OnHitEvent(object _, ShowDamageTextEventArgs e)
     {
         DamageText text;
         
@@ -48,9 +39,9 @@ public class DamageTextManager : MonoBehaviour
             text.Queue = mQueue;
         }
         
-        screenPos = RectTransformUtility.WorldToScreenPoint(InGameHolder.Instance.mainCamera, hitPosition);
+        screenPos = RectTransformUtility.WorldToScreenPoint(InGameHolder.Instance.mainCamera, e.HitPosition);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, screenPos, canvas.worldCamera, out Vector2 localPosition);
         
-        text.ShowText(damage.ToString(), localPosition, color);
+        text.ShowText(e.Damage.ToString(), localPosition, e.Color);
     }
 }

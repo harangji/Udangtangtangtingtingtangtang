@@ -1,19 +1,24 @@
-
 using System.Threading.Tasks;
-using Sirenix.Serialization;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class SamplePlayerIngame : CharacterBase, IHealable
+public class SamplePlayerIngame : CharacterBase
 {
-    public override ISkill[] Skills { get; set; }
-    
-    public void TakeHeal(int amount)
+    [field: SerializeField] public ECharacterType Type { get; set; }
+    [field: SerializeField] public EColliderCamp Camp { get; set; }
+    [field: SerializeField] public CircleCollider2D Col { get; private set;}
+    [field: SerializeField] public Rigidbody2D Rb { get; private set; }
+
+    protected override void Injection()
     {
-        UnitStat.Hp += amount;
-        CharacterCallBack.ShowDamageAction?.Invoke(amount, transform.position, Color.green);
+        Interface.Character = new CharacterInfo(Type, new CharacterStat());
+        Collidable collidable = gameObject.AddComponent<Collidable>();
+        collidable.Init(this, Camp, Col, Rb);
+        Interface.Collidable = collidable;
+
+        Interface.Damageable = new Damageable(this);
+        Interface.Healable = new Healable(this);
     }
-    
+
     public override Task ExecuteSkill(int index, CharacterBase[] target = null)
     {
         Task.Delay(1, destroyCancellationToken);

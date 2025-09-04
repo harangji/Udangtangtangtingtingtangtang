@@ -11,6 +11,11 @@ public class MapSetterWithCamera : MonoBehaviour
         targetCamera = InGameHolder.Instance.mainCamera;
         UpdateCollider();
     }
+
+    private void EscapeCatch()
+    {
+        
+    }
     
     private void UpdateCollider()
     {

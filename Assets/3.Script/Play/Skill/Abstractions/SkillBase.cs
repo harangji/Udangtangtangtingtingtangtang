@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public abstract class SkillBase : MonoBehaviour, ISkill
+public abstract class SkillBase : MonoBehaviour, ISkillInstance
 {
     public abstract EColliderCamp TargetColliderCamp { get; set; }
     public abstract CharacterBase SkillCaster { get; set; }

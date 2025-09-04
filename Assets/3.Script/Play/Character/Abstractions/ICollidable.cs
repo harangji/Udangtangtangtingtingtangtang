@@ -1,5 +1,9 @@
+using UnityEngine;
+
 public interface ICollidable
 {
     public EColliderCamp Camp { get; }
-    public void OnCollide(CharacterBase character);
+    public CircleCollider2D Col { get; }
+    public Rigidbody2D Rb { get; }
+    public void OnCollide(ICombatEvent e);
 }
