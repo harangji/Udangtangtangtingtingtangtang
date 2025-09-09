@@ -11,5 +11,5 @@ public interface ISkill
 public interface ISkillInstance
 {
     public TaskCompletionSource<bool> Tcs { get; }
-    public Task ActivateSkill(CharacterBase sender, CollideEvent[] target);
+    public Task ActivateSkill(CharacterBase sender, CombatEvent[] target);
 }

@@ -1,29 +1,41 @@
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CharacterFactory_Base : MonoBehaviour
 {
-    public GameObject CharacterPrefab;
-    public CharacterBase test;
-
-    private void Start()
-    {
-        test = CharacterPrefab.GetComponent<CharacterBase>();
-    }
-
+    public GameObject[] mCharacterPrefabs;
+    
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.touchCount == 0) return;
+        
+        Touch touch = Input.GetTouch(0);
+        
+        if (touch.phase is TouchPhase.Ended or TouchPhase.Canceled)
         {
-            BakeCharacter(test.Interface);
+            Vector3 worldPos = InGameHolder.Instance.mainCamera.ScreenToWorldPoint(touch.position);
+            worldPos.z = 0f; // 2D라면 Z축을 0으로 설정
+            
+            BakeCharacter(worldPos);
         }
+        // else if (touch.phase == TouchPhase.Began)
+        // {
+
+        // }
+        // else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) 
+        // {
+
+        // }
     }
 
-    public void BakeCharacter(InjectionInterface injectionInterface)
+    public void BakeCharacter(Vector2 vector2)
     {
-        if (Instantiate(CharacterPrefab, new Vector2(0, 0), Quaternion.identity, transform).TryGetComponent(out CharacterBase bakedCharacter))
+        GameObject copy = Instantiate(mCharacterPrefabs[Random.Range(0,2)], vector2, Quaternion.identity, transform);
+        if (copy.TryGetComponent(out CharacterBase bakedCharacter))
         {
-            bakedCharacter.Interface = injectionInterface;
+            // bakedCharacter.spriteRenderer.sprite = null;
+            bakedCharacter.Injection();
         }
     }
 }

@@ -14,14 +14,24 @@ public class InjectionInterface
 public abstract class CharacterBase : MonoBehaviour
 {
     public bool bAlive { get; set; } = true;
+    public bool bCompleteInjection { get; set; } = false;
     public InjectionInterface Interface = new InjectionInterface();
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
     
     protected virtual void Awake()
     {
-        Injection();
+        if(!bCompleteInjection)
+            Injection();
+
+        if (Interface.Collidable != null)
+        {
+            gameObject.AddComponent<OnCollisionClass>().character = this;
+            InGameHolder.Instance.Characters.Add(this);
+        }
     }
 
-    protected abstract void Injection();
+    public abstract void Injection();
     
     public abstract Task ExecuteSkill(int index, CharacterBase[] target = null);
 }

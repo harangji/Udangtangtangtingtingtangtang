@@ -25,32 +25,33 @@ public class CombatSystem : SingletonBase<CombatSystem>
     private void UpdateCombatEvent(ICombatEvent combatEvent)
     {
         if(combatEvent == null) return;
-
-        CharacterBase sender = combatEvent.Sender;
-        CharacterBase receiver = combatEvent.Receiver;
         
-        if(sender.Interface.Collidable.Camp == receiver.Interface.Collidable.Camp)
+        InjectionInterface senderInterface = combatEvent.Sender.Interface;
+        InjectionInterface receiverInterface = combatEvent.Receiver.Interface;
+        
+        if(senderInterface.Collidable.Camp == receiverInterface.Collidable.Camp)
         {
-            if (sender.Interface.Character.Type == ECharacterType.Healer)
+            if (senderInterface.Character.Type == ECharacterType.Healer)
             {
-                receiver.Interface.Healable?.TakeHeal(sender.Interface.Character.UnitStat.Attack);
+                receiverInterface.Healable.TakeHeal(AmountCalculated(senderInterface, receiverInterface, combatEvent.Skill));
             }
         }
         else
         {
-            if (sender.Interface.Character.Type == ECharacterType.Attacker)
+            if (senderInterface.Character.Type == ECharacterType.Attacker)
             {
-                sender.Interface.Collidable?.OnCollide(combatEvent);
-                receiver.Interface.Damageable?.TakeDamage(DamageCalculated(sender, receiver));
+                if(!combatEvent.Skill)
+                    senderInterface.Collidable.OnCollide(combatEvent.Receiver.transform.position);
+                receiverInterface.Damageable.TakeDamage(AmountCalculated(senderInterface, receiverInterface, combatEvent.Skill));
             }
         }
     }
 
-    private int DamageCalculated(CharacterBase sender, CharacterBase receiver)
+    private int AmountCalculated(InjectionInterface senderInterface, InjectionInterface receiverInterface, SkillBase skill = null)
     {
         int result = 0;
-        CharacterStat senderStat = sender.Interface.Character.UnitStat;
-        CharacterStat targetStat = receiver.Interface.Character.UnitStat;
+        CharacterStat senderStat = senderInterface.Character.UnitStat;
+        CharacterStat targetStat = receiverInterface.Character.UnitStat;
         
         //계산
         result = senderStat.Attack; // * 어떤 기준

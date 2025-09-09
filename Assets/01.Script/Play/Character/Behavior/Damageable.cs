@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Damageable : IDamageable
 {
+    private static readonly int DAMAGED = Animator.StringToHash("3_Damaged");
     private readonly CharacterBase mCharacter;
     
     public Damageable(CharacterBase c)
@@ -14,7 +15,7 @@ public class Damageable : IDamageable
     public void TakeDamage(int amount)
     {
         mCharacter.Interface.Character.ClampedHp.Decrease(amount);
-
+        mCharacter.animator.SetTrigger(DAMAGED);
         InGameEventHandler.Instance.ShowDamageTextHandler?.Invoke(this, 
             new ShowDamageTextEventArgs()
             {

@@ -2,41 +2,33 @@
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class Collidable : MonoBehaviour,ICollidable
+public class Collidable : ICollidable
 {
     private CharacterBase mCharacter;
     public EColliderCamp Camp { get; set; }
     public CircleCollider2D Col { get; private set;}
     public Rigidbody2D Rb { get; private set; }
-    
-    public void Init(CharacterBase c, EColliderCamp camp, CircleCollider2D col, Rigidbody2D rb)
+    public void OnCollide(ICombatEvent e)
     {
-        mCharacter = c;
+        throw new System.NotImplementedException();
+    }
+
+    public Collidable(CharacterBase character, EColliderCamp camp, CircleCollider2D col, Rigidbody2D rb)
+    {
+        mCharacter = character;
         Camp = camp;
         Col = col;
         Rb = rb;
     }
     
-    public void OnCollide(ICombatEvent e)
+    public void OnCollide(Vector3 position)
     {
-        Shove(e);
+        Shove(position);
     }
     
-    private void Shove(ICombatEvent e)
+    private void Shove(Vector3 position)
     {
-        Vector2 dir = (mCharacter.transform.position - e.Receiver.transform.position).normalized;
-        Rb.AddForce( -dir * 30f, ForceMode2D.Impulse); //나와 반대 방향으로 * 힘만큼 밀기
-    }
-    
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.TryGetComponent(out CharacterBase col))
-        {
-            CombatSystem.Instance.AddCombatEvent(new CollideEvent()
-            {
-                Sender = mCharacter,
-                Receiver = col,
-            });
-        }
+        Vector2 dir = (mCharacter.transform.position - position).normalized;
+        Rb.AddForce( dir * 30f, ForceMode2D.Impulse);
     }
 }

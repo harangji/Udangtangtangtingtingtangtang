@@ -368,6 +368,11 @@ public class SPUM_UIManager : MonoBehaviour
     //#if UNITY_EDITOR
     public void CopyToClipboard()
     {
+        if (ColorUtility.TryParseHtmlString($"#{_hexColorText.text}", out Color color))
+        {
+            NowColor = color;
+        }
+
         GUIUtility.systemCopyBuffer = _hexColorText.text;
         ToastOn("Copied Color Code");
     }
