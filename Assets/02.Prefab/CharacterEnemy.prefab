@@ -1189,9 +1189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1357248507008817433}
-  spriteRenderer: {fileID: 0}
   <Type>k__BackingField: 0
-  <Camp>k__BackingField: 1
+  <Camp>k__BackingField: 2
   <Col>k__BackingField: {fileID: 4273927224928262396}
   <Rb>k__BackingField: {fileID: 6840709618826078981}
 --- !u!58 &4273927224928262396

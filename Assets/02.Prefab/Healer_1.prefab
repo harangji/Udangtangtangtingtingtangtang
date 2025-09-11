@@ -2542,7 +2542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1657207540623627869}
   <Type>k__BackingField: 2
-  <Camp>k__BackingField: 0
+  <Camp>k__BackingField: 1
   <Col>k__BackingField: {fileID: 5008632462462537763}
   <Rb>k__BackingField: {fileID: 5789428944302666418}
 --- !u!58 &5008632462462537763
