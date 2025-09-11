@@ -26,7 +26,7 @@ public abstract class CharacterBase : MonoBehaviour
         if (Interface.Collidable != null)
         {
             gameObject.AddComponent<OnCollisionClass>().character = this;
-            InGameHolder.Instance.Characters.Add(this);
+            InGameHolder.Instance.AddCharacters(this);
         }
     }
 

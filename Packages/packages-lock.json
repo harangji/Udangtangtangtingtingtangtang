@@ -27,7 +27,7 @@
     },
     "com.unity.2d.common": {
       "version": "9.0.7",
-      "depth": 0,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.8.4",
@@ -94,7 +94,7 @@
     },
     "com.unity.burst": {
       "version": "1.8.21",
-      "depth": 0,
+      "depth": 2,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",

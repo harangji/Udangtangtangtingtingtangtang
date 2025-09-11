@@ -35,9 +35,7 @@ public class MapSetterWithCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        List<CharacterBase> characters = new List<CharacterBase>(InGameHolder.Instance.Characters);
-        
-        foreach (CharacterBase character in characters)
+        foreach (CharacterBase character in InGameHolder.Instance.GetCharacters())
         {
             targetPosition = character.transform.position;
             if (targetPosition.x < worldLeft || targetPosition.x > worldRight || 
@@ -48,7 +46,6 @@ public class MapSetterWithCamera : MonoBehaviour
             }
         }
     }
-
     
     private void UpdateCollider()
     {

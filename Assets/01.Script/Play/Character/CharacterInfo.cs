@@ -6,7 +6,7 @@ public class CharacterStat
     public int Hp = 1000;
     public int HpRegenAmount = 1;
     public int HpRegenTerm = 1;
-    public int Attack = 20;
+    public int Attack = 100;
     public float Speed = 10f;
 };
 

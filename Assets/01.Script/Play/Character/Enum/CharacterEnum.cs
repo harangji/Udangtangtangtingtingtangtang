@@ -7,6 +7,7 @@ public enum ECharacterType
 
 public enum EColliderCamp
 {
+    None,
     AllyCamp,
     EnemyCamp,
 }

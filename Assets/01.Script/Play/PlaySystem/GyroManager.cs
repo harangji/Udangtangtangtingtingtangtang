@@ -5,8 +5,7 @@ public class GyroManager : MonoBehaviour
 {
 #if UNITY_ANDROID
     
-    Gyroscope gyroscope;
-    
+    private Gyroscope mGyroscope;
     
     private void Awake()
     {
@@ -20,20 +19,28 @@ public class GyroManager : MonoBehaviour
         // }
         
         Input.gyro.enabled = true;
-        gyroscope = Input.gyro;
+        mGyroscope = Input.gyro;
         StartCoroutine(Startset());
     }
     
     private void FixedUpdate()
     {
-        Physics2D.gravity = gyroscope.gravity * 9.81f;
+        Physics2D.gravity = mGyroscope.gravity * (9.81f * 1.5f);
+        
+        if (mGyroscope.userAcceleration.magnitude > 0.5f)
+        {
+            foreach (var character in InGameHolder.Instance.GetCharacters())
+            {
+                character.Interface.Collidable.Rb.AddForce(Input.gyro.userAcceleration * 20f, ForceMode2D.Impulse);
+            }
+        }
     }
 
     private IEnumerator Startset()
     {
         while (true)
         {
-            Debug.Log($"x: {gyroscope.gravity.x}, y: {gyroscope.gravity.y}, z: {gyroscope.gravity.z}");
+            Debug.Log($"x: {mGyroscope.gravity.x}, y: {mGyroscope.gravity.y}, z: {mGyroscope.gravity.z}");
             yield return new WaitForSeconds(1);
         }
     }

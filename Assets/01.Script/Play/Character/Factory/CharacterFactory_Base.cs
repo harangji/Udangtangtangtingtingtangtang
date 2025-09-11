@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 public class CharacterFactory_Base : MonoBehaviour
 {
     public GameObject[] mCharacterPrefabs;
+    [SerializeField] private GameObject parent;
     
     public void Update()
     {
@@ -31,10 +32,10 @@ public class CharacterFactory_Base : MonoBehaviour
 
     public void BakeCharacter(Vector2 vector2)
     {
-        GameObject copy = Instantiate(mCharacterPrefabs[Random.Range(0,2)], vector2, Quaternion.identity, transform);
+        GameObject copy = Instantiate(mCharacterPrefabs[Random.Range(0,2)], vector2, Quaternion.identity, parent.transform);
+        
         if (copy.TryGetComponent(out CharacterBase bakedCharacter))
         {
-            // bakedCharacter.spriteRenderer.sprite = null;
             bakedCharacter.Injection();
         }
     }
