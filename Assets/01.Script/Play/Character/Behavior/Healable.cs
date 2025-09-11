@@ -12,7 +12,7 @@ public class Healable : IHealable
     
     public void TakeHeal(int amount)
     {
-        if(!mCharacter.bAlive) return;
+        if(!mCharacter.BAlive) return;
         
         mCharacter.Interface.Character.UnitStat.Hp += amount;
         

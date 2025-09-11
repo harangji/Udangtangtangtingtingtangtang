@@ -34,7 +34,7 @@ public static class MyDebug
         Debug.LogError(message);
     }
 #else
-    public static void Log(object message) { }
+    public static void Log(object message, int index = 0) { }
     public static void LogWarning(object message) { }
     public static void LogError(object message) { }
 #endif

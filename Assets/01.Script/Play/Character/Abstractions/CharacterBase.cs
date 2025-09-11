@@ -13,15 +13,14 @@ public class InjectionInterface
 
 public abstract class CharacterBase : MonoBehaviour
 {
-    public bool bAlive { get; set; } = true;
-    public bool bCompleteInjection { get; set; } = false;
+    public bool BAlive { get; set; } = true;
+    protected bool BCompleteInjection { get; set; } = false;
     public InjectionInterface Interface = new InjectionInterface();
     public Animator animator;
-    public SpriteRenderer spriteRenderer;
     
     protected virtual void Awake()
     {
-        if(!bCompleteInjection)
+        if(!BCompleteInjection)
             Injection();
 
         if (Interface.Collidable != null)

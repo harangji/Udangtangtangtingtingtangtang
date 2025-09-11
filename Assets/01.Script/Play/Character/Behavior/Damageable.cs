@@ -31,7 +31,7 @@ public class Damageable : IDamageable
         if (current > 0) return;
         MyDebug.Log("die", 7);
             
-        mCharacter.bAlive = false;
+        mCharacter.BAlive = false;
         mCharacter.gameObject.SetActive(false);
     }
 }

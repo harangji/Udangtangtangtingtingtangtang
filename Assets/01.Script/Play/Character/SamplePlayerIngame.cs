@@ -15,7 +15,7 @@ public class SamplePlayerIngame : CharacterBase
         Interface.Collidable = new Collidable(this, Camp, Col, Rb);
         Interface.Damageable = new Damageable(this);
         Interface.Healable = new Healable(this);
-        bCompleteInjection = true;
+        BCompleteInjection = true;
     }
 
     public override Task ExecuteSkill(int index, CharacterBase[] target = null)
