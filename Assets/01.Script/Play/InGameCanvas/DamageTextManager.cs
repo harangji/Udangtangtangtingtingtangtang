@@ -32,7 +32,7 @@ public class DamageTextManager : MonoBehaviour
             InGameEventHandler.Instance.ShowDamageTextHandler -= OnHitEvent;
     }
 
-    private void OnHitEvent(object _, ShowDamageTextEventArgs e)
+    private void OnHitEvent(object _, ShowAmountTextEventArgs e)
     {
         DamageText text;
         

@@ -1188,11 +1188,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e382d173725d46b19d375a84d8262b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
+  Camp: 2
   animator: {fileID: 1357248507008817433}
-  <Type>k__BackingField: 0
-  <Camp>k__BackingField: 2
-  <Col>k__BackingField: {fileID: 4273927224928262396}
-  <Rb>k__BackingField: {fileID: 6840709618826078981}
+  Col: {fileID: 4273927224928262396}
+  Rb: {fileID: 6840709618826078981}
+  UnitStat:
+    Hp: 700
+    Attack: 50
+    Defense: 5
+    HpRegenAmount: 1
+    HpRegenTerm: 1
 --- !u!58 &4273927224928262396
 CircleCollider2D:
   m_ObjectHideFlags: 0

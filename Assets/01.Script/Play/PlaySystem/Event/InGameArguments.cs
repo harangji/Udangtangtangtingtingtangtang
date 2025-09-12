@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ShowDamageTextEventArgs : EventArgs
+public class ShowAmountTextEventArgs : EventArgs
 {
     public int Damage { get; set; } = 0;
     public Vector2 HitPosition { get; set; } = Vector2.zero;

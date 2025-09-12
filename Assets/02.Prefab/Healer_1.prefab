@@ -2502,9 +2502,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3887566235574291870}
-  - component: {fileID: 1916477128679411071}
   - component: {fileID: 5008632462462537763}
   - component: {fileID: 5789428944302666418}
+  - component: {fileID: 6494721518646946445}
   m_Layer: 6
   m_Name: Healer_1
   m_TagString: Untagged
@@ -2528,23 +2528,6 @@ Transform:
   - {fileID: 4114873420142285281}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1916477128679411071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4533040032197559913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e382d173725d46b19d375a84d8262b10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1657207540623627869}
-  <Type>k__BackingField: 2
-  <Camp>k__BackingField: 1
-  <Col>k__BackingField: {fileID: 5008632462462537763}
-  <Rb>k__BackingField: {fileID: 5789428944302666418}
 --- !u!58 &5008632462462537763
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2608,6 +2591,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &6494721518646946445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4533040032197559913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483e7d1e7c9d4c7a833b2cdcb271ab4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
+  Camp: 1
+  animator: {fileID: 1657207540623627869}
+  Col: {fileID: 5008632462462537763}
+  Rb: {fileID: 5789428944302666418}
+  UnitStat:
+    Hp: 1000
+    Attack: 70
+    Defense: 20
+    HpRegenAmount: 1
+    HpRegenTerm: 1
 --- !u!1 &4605338347119504353
 GameObject:
   m_ObjectHideFlags: 0

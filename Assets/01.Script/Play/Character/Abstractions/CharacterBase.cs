@@ -3,34 +3,56 @@ using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class InjectionInterface
-{
-    public ICharacter Character { get; set; }
-    public ICollidable Collidable { get; set; }
-    public IDamageable Damageable { get; set; }
-    public IHealable Healable { get; set; }
-}
-
 public abstract class CharacterBase : MonoBehaviour
 {
-    public bool BAlive { get; set; } = true;
-    protected bool BCompleteInjection { get; set; } = false;
-    public InjectionInterface Interface = new InjectionInterface();
+    public ECharacterType Type;
+    public EColliderCamp Camp;
+    
     public Animator animator;
+    public CircleCollider2D Col;
+    public Rigidbody2D Rb;
+    public CharacterStat UnitStat;
+    public ClampedInt ClampedHp { get; set; }
+    public bool BAlive { get; set; } = true;
+    [ReadOnly] public int testhp;
     
-    protected virtual void Awake()
+    
+    private static readonly int DAMAGED = Animator.StringToHash("3_Damaged");
+    
+    public void Awake()
     {
-        if(!BCompleteInjection)
-            Injection();
-
-        if (Interface.Collidable != null)
-        {
-            gameObject.AddComponent<OnCollisionClass>().character = this;
-            InGameHolder.Instance.AddCharacters(this);
-        }
+        ClampedHp = new ClampedInt(0, UnitStat.Hp, UnitStat.Hp);
+        InGameHolder.Instance.AddCharacters(this);
     }
-
-    public abstract void Injection();
     
-    public abstract Task ExecuteSkill(int index, CharacterBase[] target = null);
+    public void TakeHPChange(int amount)
+    {
+        if(!BAlive) return;
+        
+        ClampedHp.Increase(amount);
+        testhp = ClampedHp.Current;
+        
+        if (ClampedHp.IsMin) Dead();
+        
+        InGameEventHandler.Instance.ShowDamageTextHandler?.Invoke(this, 
+            new ShowAmountTextEventArgs()
+            {
+                Damage = amount,
+                HitPosition = transform.position,
+                Color = amount >= 0 ? Color.green : Color.red
+            }
+        );
+    }
+    
+    private void Dead()
+    {
+        MyDebug.Log("die", 7);
+        InGameHolder.Instance.RemoveCharacters(this);
+        BAlive = false;
+        gameObject.SetActive(false);
+    }
+    
+    public abstract void OnCollide(CharacterBase other);
+    public abstract void Shove(CharacterBase character);
+    public abstract void OnCollisionEnter2D(Collision2D other);
 }

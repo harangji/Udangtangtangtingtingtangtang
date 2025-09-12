@@ -8,8 +8,8 @@ public interface ISkill
     public void SkillEffect();
 }
 
-public interface ISkillInstance
-{
-    public TaskCompletionSource<bool> Tcs { get; }
-    public Task ActivateSkill(CharacterBase sender, CombatEvent[] target);
-}
+// public interface ISkillInstance
+// {
+//     public TaskCompletionSource<bool> Tcs { get; }
+//     public Task ActivateSkill(CharacterBase sender, CombatEvent[] target);
+// }

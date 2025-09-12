@@ -59,6 +59,16 @@ public abstract class ClampedValue<T> where T : struct, IComparable<T>
         Events.OnDecreased?.Invoke(prev, amount);
     }
 
+    protected Func<T, T, float, T> LerpFunc;
+
+    public void Lerp(float t)
+    {
+        if (LerpFunc == null)
+            throw new InvalidOperationException("LerpFunc is not set for this ClampedValue type");
+
+        Set(LerpFunc(Min, Max, t));
+    }
+    
     public void SetMinMax(T newMin, T newMax)
     {
         if (newMin.CompareTo(newMax) > 0)

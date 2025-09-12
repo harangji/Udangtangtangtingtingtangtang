@@ -3,7 +3,10 @@ using UnityEngine;
 public class ClampedInt : ClampedValue<int>
 {
     public ClampedInt(int min, int max, int initial)
-        : base(min, max, initial) { }
+        : base(min, max, initial)
+    {
+        LerpFunc = (minV, maxV, t) => Mathf.RoundToInt(Mathf.Lerp(minV, maxV, t));
+    }
 
     public override float Ratio => (float)(Current - Min) / (Max - Min);
     

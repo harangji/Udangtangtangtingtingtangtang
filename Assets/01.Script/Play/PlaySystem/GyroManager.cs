@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,13 +7,17 @@ public class GyroManager : MonoBehaviour
 #if UNITY_ANDROID
     
     private Gyroscope mGyroscope;
+    private float mMagnitude;
     
     private void Awake()
     {
-        // if (SystemInfo.supportsGyroscope) {
+        // if (SystemInfo.supportsGyroscope) 
+        // {
         //     Input.gyro.enabled = true;
-        //     gyroscope = Input.gyro;
-        // } else {
+        //     mGyroscope = Input.gyro;
+        // }
+        // else 
+        // {
         //     Debug.Log("이 장치는 자이로스코프를 지원하지 않습니다.");
         //     Input.gyro.enabled = false;
         //     gameObject.SetActive(false);
@@ -26,12 +31,15 @@ public class GyroManager : MonoBehaviour
     private void FixedUpdate()
     {
         Physics2D.gravity = mGyroscope.gravity * (9.81f * 1.5f);
-        
-        if (mGyroscope.userAcceleration.magnitude > 0.5f)
+        mMagnitude = mGyroscope.userAcceleration.magnitude;
+
+        if (mMagnitude > 0.5f)
         {
+            InGameEventHandler.Instance.GyroShakeHandler?.Invoke(mMagnitude);
+            
             foreach (var character in InGameHolder.Instance.GetCharacters())
             {
-                character.Interface.Collidable.Rb.AddForce(Input.gyro.userAcceleration * 20f, ForceMode2D.Impulse);
+                character.Rb.AddForce(mGyroscope.userAcceleration * 15f, ForceMode2D.Impulse);
             }
         }
     }

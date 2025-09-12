@@ -20,7 +20,7 @@ public class InGameHolder : SingletonBase<InGameHolder>
     public void AddCharacters(CharacterBase character)
     {
         Characters.Add(character);
-        if (character.Interface.Collidable.Camp == EColliderCamp.AllyCamp)
+        if (character.Camp == EColliderCamp.AllyCamp)
         {
             Allys.Add(character);
         }
@@ -33,13 +33,12 @@ public class InGameHolder : SingletonBase<InGameHolder>
     public void RemoveCharacters(CharacterBase character)
     {
         Characters.Remove(character);
+        
         if (Characters.Count == 0)
         {
             InGameEventHandler.Instance.CheakGameEndHandler?.Invoke(EColliderCamp.None);
-            return;
         }
-        
-        if (character.Interface.Collidable.Camp == EColliderCamp.AllyCamp)
+        else if (character.Camp == EColliderCamp.AllyCamp)
         {
             Allys.Remove(character);
             if (Allys.Count == 0)

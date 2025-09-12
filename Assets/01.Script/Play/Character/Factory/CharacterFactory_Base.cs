@@ -20,23 +20,10 @@ public class CharacterFactory_Base : MonoBehaviour
             
             BakeCharacter(worldPos);
         }
-        // else if (touch.phase == TouchPhase.Began)
-        // {
-
-        // }
-        // else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) 
-        // {
-
-        // }
     }
 
     public void BakeCharacter(Vector2 vector2)
     {
-        GameObject copy = Instantiate(mCharacterPrefabs[Random.Range(0,2)], vector2, Quaternion.identity, parent.transform);
-        
-        if (copy.TryGetComponent(out CharacterBase bakedCharacter))
-        {
-            bakedCharacter.Injection();
-        }
+        Instantiate(mCharacterPrefabs[Random.Range(0, mCharacterPrefabs.Length)], vector2, Quaternion.identity, parent.transform);
     }
 }

@@ -1,7 +1,12 @@
+using Febucci.Numbers;
+
 public class ClampedUInt : ClampedValue<uint>
 {
     public ClampedUInt(uint min, uint max, uint initial)
-        : base(min, max, initial) { }
+        : base(min, max, initial)
+    {
+        LerpFunc = (minV, maxV, t) => (uint)Mathf.Lerp(minV, maxV, t);
+    }
 
     public override float Ratio => (float)(Current - Min) / (float)(Max - Min);
     
