@@ -17,7 +17,7 @@ public abstract class CharacterBase : MonoBehaviour
     [ReadOnly] public int testhp;
     
     
-    private static readonly int DAMAGED = Animator.StringToHash("3_Damaged");
+    protected readonly int DAMAGED = Animator.StringToHash("3_Damaged");
     
     public void Awake()
     {

@@ -6,6 +6,7 @@ public class AttackerSample : CharacterBase
 {
     public override void OnCollide(CharacterBase other)
     {
+        animator.SetTrigger(DAMAGED);
         Shove(other);
         other.TakeHPChange(CombatSystem.Instance.AmountCalculated(this,other));
     }

@@ -4,7 +4,7 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
 {
     protected static T instance;
     private static readonly object lockObj = new object();
-    private static bool applicationIsQuitting = false;
+    // private static bool applicationIsQuitting = false;
     private static bool isInitialized = false;
 
     public static bool IsInitialized => isInitialized && instance != null;
@@ -14,11 +14,11 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-            if (applicationIsQuitting)
-            {
-                Debug.LogWarning($"[Singleton] {typeof(T)} 접근 시도됨: 애플리케이션 종료 중");
-                return null;
-            }
+            // if (applicationIsQuitting)
+            // {
+            //     Debug.LogWarning($"[Singleton] {typeof(T)} 접근 시도됨: 애플리케이션 종료 중");
+            //     return null;
+            // }
 
             lock (lockObj)
             {
@@ -62,10 +62,10 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    protected virtual void OnApplicationQuit()
-    {
-        applicationIsQuitting = true;
-    }
+    // protected virtual void OnApplicationQuit()
+    // {
+    //     applicationIsQuitting = true;
+    // }
 
     protected virtual void OnDestroy()
     {
@@ -74,7 +74,7 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
             OnDispose();
             instance = null;
             isInitialized = false;
-            applicationIsQuitting = true;
+            // applicationIsQuitting = true;
         }
     }
 
@@ -104,7 +104,7 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
 #endif
             instance = null;
             isInitialized = false;
-            applicationIsQuitting = false;
+            // applicationIsQuitting = false;
         }
     }
 }

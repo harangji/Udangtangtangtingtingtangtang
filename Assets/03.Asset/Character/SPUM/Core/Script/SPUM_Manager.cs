@@ -172,7 +172,7 @@ public class SPUM_Manager : MonoBehaviour
         string unitType = ButtonData.UnitType;
         string partType = ButtonData.PartType;
 
-        //패키지 구룹화 - 패키지 필터 조건
+        //패키지 그룹화 - 패키지 필터 조건
         var groupedPackageData = SpumPackages
             .Where(p => enabledPackages.Contains(p.Name)) // 패키지 이름이 enabledPackages 리스트에 있는 것만 선택
             .SelectMany(p => p.SpumTextureData.Select(t => new { Package = p, Texture = t }))

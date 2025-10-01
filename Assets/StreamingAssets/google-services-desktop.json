@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "578104588190",
+    "project_id": "udangtangtangtingtingtan-25fab",
+    "storage_bucket": "udangtangtangtingtingtan-25fab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578104588190:android:47bb16da4a0baeefda888f",
+        "android_client_info": {
+          "package_name": "com.UdangtangtangGames.Udangtangtangtingtingtangtang"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-2c78NVygP64QjXz2YLMdK6GjxndAlTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

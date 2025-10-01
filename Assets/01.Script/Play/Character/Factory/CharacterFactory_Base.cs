@@ -1,25 +1,21 @@
 
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class CharacterFactory_Base : MonoBehaviour
 {
     public GameObject[] mCharacterPrefabs;
     [SerializeField] private GameObject parent;
-    
-    public void Update()
+    private TouchInputProvider touchInputProvider;
+
+    private void OnEnable()
     {
-        if (Input.touchCount == 0) return;
-        
-        Touch touch = Input.GetTouch(0);
-        
-        if (touch.phase is TouchPhase.Ended or TouchPhase.Canceled)
-        {
-            Vector3 worldPos = InGameHolder.Instance.mainCamera.ScreenToWorldPoint(touch.position);
-            worldPos.z = 0f; // 2D라면 Z축을 0으로 설정
-            
-            BakeCharacter(worldPos);
-        }
+        touchInputProvider = TouchInputProvider.Instance;
+        touchInputProvider.OnTouchEnded += BakeCharacter;
+    }
+
+    private void OnDisable()
+    {
+        touchInputProvider.OnTouchEnded -= BakeCharacter;
     }
 
     public void BakeCharacter(Vector2 vector2)
