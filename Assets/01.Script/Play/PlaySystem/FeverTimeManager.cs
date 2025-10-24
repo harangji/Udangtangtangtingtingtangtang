@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class FeverTimeManager : MonoBehaviour
 {
-    public Slider feverTimeSlider;
-    public TMP_Text feverTimeText;
+    [SerializeField] private Slider feverTimeSlider;
+    [SerializeField] private TMP_Text feverTimeText;
     public float feverTime = 0f;
     public float feverTimeMax = 10f;
     
@@ -18,7 +18,7 @@ public class FeverTimeManager : MonoBehaviour
     private void Awake()
     {
         feverGaugeClamped = new ClampedFloat(0, 100, 0);
-        feverGaugeClamped.Events.OnValueChanged += UpdateFiverGaugeBar;
+        feverGaugeClamped.Events.OnValueChanged += UpdateFeverGaugeBar;
         InGameEventHandler.Instance.GyroShakeHandler += GainFeverGauge;
     }
 
@@ -34,7 +34,7 @@ public class FeverTimeManager : MonoBehaviour
         }
     }
 
-    public void UpdateFiverGaugeBar(float _, float __)
+    public void UpdateFeverGaugeBar(float _, float __)
     {
         feverTimeSlider.value = feverGaugeClamped.Ratio;
     }
@@ -42,7 +42,8 @@ public class FeverTimeManager : MonoBehaviour
     public IEnumerator StartFever()
     {
         feverTimeText.gameObject.SetActive(true);
-        StartCoroutine(EnSleep(() => feverTimeText.gameObject.SetActive(false)));
+        yield return new WaitForSeconds(1f);
+        feverTimeText.gameObject.SetActive(false);
         
         while (feverTime < feverTimeMax)
         {
@@ -54,11 +55,5 @@ public class FeverTimeManager : MonoBehaviour
         
         mbFeverTime = false;
         yield return null;
-    }
-
-    public IEnumerator EnSleep(Action callback)
-    {
-        yield return new WaitForSeconds(1f);
-        callback?.Invoke();
     }
 }

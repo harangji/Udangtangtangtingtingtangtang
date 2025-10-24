@@ -43,6 +43,15 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            var otherSingleton = instance as SingletonBase<T>;
+            if (otherSingleton != null && !otherSingleton.dontDestroyOnLoad && instance.gameObject.scene != this.gameObject.scene)
+            {
+                instance = null;
+            }
+        }
+        
         if (instance == null)
         {
             instance = this as T;

@@ -8,9 +8,9 @@ namespace _01.Script.Play.PlaySystem
     {
         public TMP_Text GameFlowText;
         
-        private void Start()
+        public void Start()
         {
-            InGameEventHandler.Instance.CheakGameEndHandler += GetIsGameOver;
+            InGameEventHandler.Instance.CheckGameEndHandler += GetIsGameOver;
         }
         
         public void GetIsGameOver(EColliderCamp camp)
