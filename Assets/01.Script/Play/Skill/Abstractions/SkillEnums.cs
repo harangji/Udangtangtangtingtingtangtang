@@ -90,4 +90,9 @@ public enum ETargetType
         /// 기본 공격 스킬
         /// </summary>
         BasicAttack,
+
+        /// <summary>
+        /// 화염구를 발사하는 스킬
+        /// </summary>
+        Fireball,
     }

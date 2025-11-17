@@ -1,9 +1,11 @@
 using System.Threading.Tasks;
+using TMPro;
 using Unity.Collections;
 using UnityEngine;
 
 public class PlayerCharacter : CharacterBase
 {
+    public TMP_Text hpText;
     [Header("레벨/경험치")]
     public int Level = 1;
     public int CurrentExperience = 0;
@@ -15,6 +17,7 @@ public class PlayerCharacter : CharacterBase
         animator.SetTrigger(DAMAGED);
         Shove(other);
         other.TakeHPChange(CombatSystem.Instance.AmountCalculated(this,other));
+        hpText.text = $"{ClampedHp.Current} / {ClampedHp.Max}";
     }
 
     public override void Shove(CharacterBase character)
@@ -81,7 +84,11 @@ public class PlayerCharacter : CharacterBase
         ExperienceToNextLevel = CalculateExperienceNeededForNextLevel(Level);
 
         Debug.Log($"레벨업! 레벨 {Level} 달성! 스킬 선택 창을 엽니다.");
-
+        
+        ClampedHp.SetMinMax(ClampedHp.Min, ClampedHp.Max + (int)(ClampedHp.Max * 0.1f)); 
+        ClampedHp.ResetToMax();
+        hpText.text = $"{ClampedHp.Current} / {ClampedHp.Max}";
+        
         // 스킬 업그레이드 매니저에서 선택지를 가져옵니다.
         var options = SkillUpgradeManager.Instance.GetUpgradeOptions(3);
 

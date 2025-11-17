@@ -16,7 +16,7 @@ public class LevelUpUIManager : SingletonBase<LevelUpUIManager>
     [Tooltip("스킬 선택 버튼들이 생성될 컨테이너의 Transform")][SerializeField]
     private Transform buttonContainer;
 
-    private PlayerSkillHandler _playerSkillHandler;
+    private SkillController _playerSkillController; // PlayerSkillHandler 대신 SkillController를 사용합니다.
 
     protected override bool dontDestroyOnLoad { get; set; } = false;
 
@@ -29,11 +29,12 @@ public class LevelUpUIManager : SingletonBase<LevelUpUIManager>
 
     private void Start()
     {
-        // 씬에서 PlayerSkillHandler를 찾아 참조를 저장합니다.
-        _playerSkillHandler = FindObjectOfType<PlayerSkillHandler>();
-        if (_playerSkillHandler == null)
+        // 씬에서 플레이어의 SkillController를 찾아 참조를 저장합니다.
+        // 씬에 플레이어의 SkillController가 하나만 존재한다고 가정합니다.
+        _playerSkillController = FindObjectOfType<SkillController>();
+        if (_playerSkillController == null)
         {
-            Debug.LogError("씬에서 PlayerSkillHandler를 찾을 수 없습니다.");
+            Debug.LogError("씬에서 플레이어의 SkillController를 찾을 수 없습니다.");
         }
     }
 
@@ -60,14 +61,9 @@ public class LevelUpUIManager : SingletonBase<LevelUpUIManager>
             SkillChoiceButtonUI buttonUI = buttonGO.GetComponent<SkillChoiceButtonUI>();
 
             if (buttonUI != null)
-            {
+            { 
                 // 버튼의 UI 내용을 스킬 데이터에 맞게 설정합니다.
-                buttonUI.skillIcon.sprite = skillOption.icon;
-                buttonUI.skillNameText.text = skillOption.skillName;
-                buttonUI.skillDescriptionText.text = skillOption.description;
-                
-                // 버튼 클릭 시 OnOptionSelected를 호출하도록 리스너를 추가합니다.
-                buttonUI.choiceButton.onClick.AddListener(() => OnOptionSelected(skillOption));
+                buttonUI.Setup(skillOption, () => OnOptionSelected(skillOption));
             }
         }
     }
@@ -78,14 +74,14 @@ public class LevelUpUIManager : SingletonBase<LevelUpUIManager>
     /// <param name="selectedSkill">선택된 스킬 데이터</param>
     private void OnOptionSelected(SkillData selectedSkill)
     {
-        if (_playerSkillHandler != null)
+        if (_playerSkillController != null)
         {
-            // 플레이어의 스킬 핸들러에 선택된 스킬을 추가/업그레이드합니다.
-            _playerSkillHandler.AddSkill(selectedSkill);
+            // 플레이어의 스킬 컨트롤러에 선택된 스킬을 추가/업그레이드합니다.
+            _playerSkillController.AddSkill(selectedSkill);
         }
         else
         {
-            Debug.LogError("씬에서 PlayerSkillHandler를 찾을 수 없습니다.");
+            Debug.LogError("씬에서 플레이어의 SkillController를 찾을 수 없습니다.");
         }
 
         // UI를 숨기고 게임을 재개합니다.

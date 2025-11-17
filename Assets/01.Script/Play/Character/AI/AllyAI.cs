@@ -71,7 +71,6 @@ public class AllyAI : MonoBehaviour
     private IEnumerator KnockbackRoutine(Vector2 direction)
     {
         _isKnockedBack = true;
-        _characterBase.IsInvincible = true;
 
         // 튕겨나가기
         _rb.linearVelocity = Vector2.zero; // 기존 속도 초기화
@@ -86,7 +85,6 @@ public class AllyAI : MonoBehaviour
         yield return new WaitForSeconds(knockbackDuration);
 
         _isKnockedBack = false;
-        _characterBase.IsInvincible = false;
         _rb.linearVelocity = Vector2.zero; // 넉백 후 속도 정지
         _rb.angularVelocity = 0; // 회전 정지
 

@@ -4,7 +4,7 @@ public class EnemyCharacter : CharacterBase
 {
     [SerializeField] protected GameObject _experienceGemPrefab; // 죽었을 때 생성할 경험치 보석 프리팹
 
-    protected override void Dead()
+    public override void Dead()
     {
         // 경험치 보석 프리팹이 할당되어 있다면, 현재 위치에 생성합니다.
         if (_experienceGemPrefab != null)

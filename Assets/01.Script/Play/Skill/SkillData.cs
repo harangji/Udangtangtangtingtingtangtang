@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "New SkillData", menuName = "Udangtangtang/Skill Data", order = 0)]
-public class SkillData : ScriptableObject
+public class SkillData
 {
     [Header("기본 정보")]
     public string skillName;
@@ -10,7 +9,6 @@ public class SkillData : ScriptableObject
     public string description;
     public Sprite icon;
     public GameObject skillEffectPrefab; // 추가된 부분
-    public float coolTime;
 
     [Header("스킬 분류")]
     public ESkillType skillType;
@@ -21,9 +19,14 @@ public class SkillData : ScriptableObject
     public GameObject projectilePrefab;
     public float projectileSpeed;
 
+    [Header("레벨 정보")]
+    public int maxLevel = 5;
+    public List<float> damageMultiplierPerLevel;
+    public List<float> cooldownPerLevel;
+    public List<int> projectilesPerLevel;
+
     [Header("스킬 수치 정보")]
-    [Tooltip("스킬에 사용되는 다양한 수치들 (예: 데미지, 버프/디버프 양, 지속 시간, 범위 등)")]
+    [Tooltip("스킬에 사용되는 다양한 수치들 (예: 데미지 계수, 지속 시간, 범위 등)")]
     public float duration;
-    public float skillRange; // 추가된 부분
-    public List<float> amounts;
+    public float skillRange;
 }

@@ -21,6 +21,7 @@ MonoBehaviour:
   targetType: 0
   projectilePrefab: {fileID: 0}
   projectileSpeed: 0
-  duration: 0
-  skillRange: 0
-  amounts: []
+  duration: 1
+  skillRange: 5
+  amounts:
+  - 50
