@@ -14,7 +14,6 @@ public class PlayerHPBar : MonoBehaviour
 
     void Start()
     {
-        //testtesttest
         // InGameHolder를 통해 플레이어 캐릭터의 참조를 얻어옵니다.
         if (InGameHolder.Instance != null && InGameHolder.Instance.playerCharacter != null)
         {
